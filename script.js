@@ -1,28 +1,31 @@
-const loadPhone=async(searchText='a') =>{
+const loadPhone=async(searchText='a',isShowAll) =>{
     const res=await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
     const data=await res.json();
     const phones=data.data;
     // console.log(phones);
-    displayPhones(phones);   
+    displayPhones(phones,isShowAll);   
 };
 
-const displayPhones=phones=>{
+const displayPhones=(phones,isShowAll)=>{
     //1.get full container
     const phoneContainer=document.getElementById("phone-container");
     //clear phone container before adding new phone
     phoneContainer.textContent='';
     const showBtn=document.getElementById("show-btn");
-    if (phones.length > 12){
+    if (phones.length > 12 && !isShowAll){
         showBtn.classList.remove("hidden");
-        phones=phones.slice(0,12);
+        
         document.getElementById("allMobile").addEventListener("click",function(){
             phones=phones.length;
         })
     }
-    else if(phones.length <= 12){
+    else{
         showBtn.classList.add("hidden");
+    };
+    console.log("isShowAll",isShowAll)
+    if(!isShowAll){
+        phones=phones.slice(0,12);
     }
-    
     phones.forEach(phone=>{
 
         // console.log(phone);
@@ -53,7 +56,7 @@ const handleSearch = (isShowAll)=>{
     const searchField=document.getElementById('search-field');
     let searchText=searchField.value;
     console.log(searchText);
-    loadPhone(searchText);
+    loadPhone(searchText,isShowAll);
     searchField.value="";
 }
 // const handleSearch2=()=>{
@@ -109,5 +112,8 @@ const showPhoneDetails=(phone)=>{
          || "No info"}</p>
     `
     console.log(phoneName);
+}
+const handleShowAll=()=>{
+    handleSearch(true);
 }
 loadPhone();
