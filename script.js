@@ -24,7 +24,7 @@ const displayPhones=(phones,isShowAll)=>{
     };
     console.log("isShowAll",isShowAll)
     if(!isShowAll){
-        phones=phones.slice(0,12);
+        phones=phones;
     }
     phones.forEach(phone=>{
 
@@ -114,6 +114,6 @@ const showPhoneDetails=(phone)=>{
     console.log(phoneName);
 }
 const handleShowAll=()=>{
-    handleSearch(true);
+    console.log('show all');
 }
 loadPhone();
